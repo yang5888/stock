@@ -10,7 +10,7 @@
 @modify: 
 """
 
-import urllib
+import ssl
 from urllib import error
 from urllib import request
 
@@ -19,9 +19,10 @@ class Spider(object):
         pass
 
     def spider(self, url, header):
+        context = ssl._create_unverified_context()
         try:
             req = request.Request(url, headers=header)
-            res = request.urlopen(req).read()
+            res = request.urlopen(req, context=context).read()
             return res
         except error.HTTPError as e:
             print(e.code)
