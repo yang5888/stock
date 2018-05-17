@@ -19,7 +19,7 @@ from spiders import tools
 
 class GetStockInfo(object):
     def __init__(self):
-        r = readconf.ReadConf('../stock.conf')
+        r = readconf.ReadConf('../etc/stock.conf')
         self.__agent = r.getUserAgent()
         self.__cookie = r.getCookie()
 
@@ -40,6 +40,7 @@ class GetStockInfo(object):
             for column in columns:
                 record = tool.strcat(record, context[column])
             replace_data = DML.DML()
+            print(record)
             replace_data.ReplacetData('../db/stock.db','stock_market',record)
 
 

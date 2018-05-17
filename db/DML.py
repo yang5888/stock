@@ -34,6 +34,15 @@ class DML(object):
         conn.commit()
         conn.close()
 
+    def TruncateData(self,db,tb):
+        self.__db = db
+        self.__tb = tb
+        conn = sqlite3.connect(self.__db)
+        conn.cursor().execute("DELETE from "+ self.__tb)
+        conn.commit()
+        conn.close()
+
+
     def SelectData(self,db,sql):
         self.__db = db
         self.__sql = sql
@@ -52,18 +61,3 @@ class DML(object):
         data = "[" + data + "]"
         return data
         conn.close()
-
-if __name__ == '__main__':
-    db = 'stock.db'
-    # sql = "select b.name,a.percentage from stock_market a join stock b on a.symbol=b.symbol where close_price=rise_stop and high<>low order by percentage desc"
-    sql = "select * from stock_market limit 5"
-    tb = 'stock'
-    # data = '"SZ002388","新亚制程"'
-    data = '"SH600207","安彩高科"'
-    c = DML()
-    # c.InsertData(db,tb,data)
-    # c.ReplacetData(db,tb,data)
-    d = c.SelectData(db, sql)
-    print(d)
-    # for sub_index in list(range(len(json.loads(d)))):
-    #     print json.loads(d)[sub_index]['symbol']

@@ -27,4 +27,5 @@ class ReadConf(object):
         return self.__agent
 
 if __name__ == '__main__':
-    r = ReadConf('../stock.conf')
+    r = ReadConf('../etc/stock.conf')
+    r.getUserAgent()

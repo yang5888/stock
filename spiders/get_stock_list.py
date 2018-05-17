@@ -17,11 +17,12 @@ from spiders import spider
 
 class GetStockList:
     def __init__(self):
-        r = readconf.ReadConf('../stock.conf')
+        r = readconf.ReadConf('../etc/stock.conf')
         self.__agent = r.getUserAgent()
         self.__cookie = r.getCookie()
 
     def run(self):
+        sub_stock_list_ignore = ["090","091","103","104","105","106","107","200","900","XCN"]
         getstocklist = spider.Spider()
         page = '1'
         size = '100'
@@ -35,6 +36,9 @@ class GetStockList:
             for sub_index in list(range(len(data['stocks']))):
                 record = "\"" + data['stocks'][sub_index]['symbol'] + "\"" + "," + "\"" + data['stocks'][sub_index]['name'] + "\""
                 replace_data = DML.DML()
+                if data['stocks'][sub_index]['symbol'][2:5] in sub_stock_list_ignore:
+                    continue
+                print(record)
                 replace_data.ReplacetData('../db/stock.db','stock',record)
 
 
