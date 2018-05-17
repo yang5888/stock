@@ -104,5 +104,6 @@ venv.bak/
 .mypy_cache/
 
 # My configurations
+local*.py
 stock.conf
 .idea/
