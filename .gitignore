@@ -105,5 +105,4 @@ venv.bak/
 
 # My configurations
 local*.py
-stock.conf
 .idea/
