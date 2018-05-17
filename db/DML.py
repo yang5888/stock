@@ -55,7 +55,8 @@ class DML(object):
 
 if __name__ == '__main__':
     db = 'stock.db'
-    sql = "select b.name,a.percentage from stock_market a join stock b on a.symbol=b.symbol where close_price=rise_stop and high<>low order by percentage desc"
+    # sql = "select b.name,a.percentage from stock_market a join stock b on a.symbol=b.symbol where close_price=rise_stop and high<>low order by percentage desc"
+    sql = "select * from stock_market limit 5"
     tb = 'stock'
     # data = '"SZ002388","新亚制程"'
     data = '"SH600207","安彩高科"'
