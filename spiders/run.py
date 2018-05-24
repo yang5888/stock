@@ -3,7 +3,7 @@
 @version: 
 @author:yang 
 @time: 2018/05/14 
-@file: run.py 
+@file: manage.py
 @Project : stock
 @Software: PyCharm
 @function: 
