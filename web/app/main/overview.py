@@ -26,8 +26,7 @@ class overview(object):
         return json.loads(d)
 
     def chart1(self):
-        sql = "select stat_date,count(case when close_price=rise_stop and rise_stop<>fall_stop then code else null end) rise_stop from stock_market group by stat_date"
+        sql = "select stat_date,count(case when close_price=rise_stop and rise_stop<>fall_stop then code else null end) rise_stop,count(case when close_price=fall_stop and rise_stop<>fall_stop then code else null end) fall_stop,count(case when percentage>0 then code else null end) rise,count(case when percentage<0 then code else null end) fall from stock_market group by stat_date order by stat_date"
         sel = DML.DML()
         d = sel.SelectData('../../db/stock.db', sql)
         return d
-

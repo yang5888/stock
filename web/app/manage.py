@@ -23,9 +23,14 @@ def index():
     cal = overview.overview()
     table1 = cal.table1()
     chart1 = cal.chart1()
-    print(len(list(chart1)))
-    print(json.loads(str(chart1))[0]['stat_date'])
-    return render_template('overview.html', table1=table1)
+    chart1_key,chart1_value1,chart1_value2,chart1_value3,chart1_value4 = [], [], [], [], []
+    for i in list(range(len(json.loads(chart1)))):
+        chart1_key.append(json.loads(chart1)[i]['stat_date'])
+        chart1_value1.append(json.loads(chart1)[i]['rise_stop'])
+        chart1_value2.append(json.loads(chart1)[i]['fall_stop'])
+        chart1_value3.append(json.loads(chart1)[i]['rise'])
+        chart1_value4.append(json.loads(chart1)[i]['fall'])
+    return render_template('overview.html', table1=table1, chart1_key=chart1_key, chart1_value1=chart1_value1, chart1_value2 = chart1_value2, chart1_value3 = chart1_value3, chart1_value4 = chart1_value4)
 
 @app.route('/overview')
 def overview_page():

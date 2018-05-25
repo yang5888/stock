@@ -76,22 +76,40 @@
         </div>
         <div class="col-md-7">
             <div class="panel panel-default">
-				<div class="panel-heading">变化趋势</div>
-				<div class="panel-body">
+				<div class="panel-heading"><strong>变化趋势</strong></div>
+				<meta class="panel-body">
 					<script src="/static/chart.js/dist/Chart.js"></script>
-					<canvas id="myChart" width="400" height="400"></canvas>
+					<canvas id="myChart" width="400" height="200"></canvas>
 					<script>
 						var ctx = document.getElementById('myChart');
 						var myChart = new Chart(ctx, {
 							type : 'line',
 							data : {
-								labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+								labels: [{% for key in chart1_key %}"{{key}}",{% endfor %}],
 								datasets: [
 									{
-										label: '# of Votes',
-										data: [12, 19, 3, 5, 2, 3],
+										label: '涨停数',
+										data: [{% for value in chart1_value1 %}"{{value}}",{% endfor %}],
 										backgroundColor: 'transparent',
-										borderColor: 'rgba(0, 0, 0, 0.5)',
+										borderColor: 'rgba(255, 0, 0, 1)',
+										borderWidth: 2
+									},{
+										label: '跌停数',
+										data: [{% for value in chart1_value2 %}"{{value}}",{% endfor %}],
+										backgroundColor: 'transparent',
+										borderColor: 'rgba(89, 255, 0, 1)',
+										borderWidth: 2
+									},{
+										label: '上涨数',
+										data: [{% for value in chart1_value3 %}"{{value}}",{% endfor %}],
+										backgroundColor: 'transparent',
+										borderColor: 'rgba(255, 164, 164, 0.87)',
+										borderWidth: 2
+									},{
+										label: '下跌数',
+										data: [{% for value in chart1_value4 %}"{{value}}",{% endfor %}],
+										backgroundColor: 'transparent',
+										borderColor: 'rgba(172, 254, 154, 0.87)',
 										borderWidth: 2
 									}
 								]
