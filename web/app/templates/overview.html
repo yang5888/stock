@@ -1,0 +1,132 @@
+{% extends "forms.html" %}
+
+{% block form %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong>当日概览</strong></div>
+				<div class="panel-body">
+					<table class="table table-hover table-bordered">
+						<tbody>
+							<tr>
+								<th>两市A股</th>
+								<td>{{table1[0].total}}</td>
+							</tr>
+							<tr>
+								<th>当日涨停</th>
+								<td>{{table1[0].rise_stop}}</td>
+							</tr>
+                            <tr>
+								<th>当日自然涨停</th>
+								<td>{{table1[0].nature_rise_stop}}</td>
+							</tr>
+                            <tr>
+								<th>当日触及涨停</th>
+								<td>{{table1[0].touch_rise_stop}}</td>
+							</tr>
+							<tr>
+								<th>当日跌停</th>
+								<td>{{table1[0].fall_stop}}</td>
+							</tr>
+                            <tr>
+								<th>当日自然跌停</th>
+								<td>{{table1[0].nature_fall_stop}}</td>
+							</tr>
+							<tr>
+								<th>当日上涨</th>
+								<td>{{table1[0].rise}}</td>
+							</tr>
+							<tr>
+								<th>当日下跌</th>
+								<td>{{table1[0].fall}}</td>
+							</tr>
+							<tr>
+								<th>当日平盘</th>
+								<td>{{table1[0].keep}}</td>
+							</tr>
+							<tr>
+								<th>当日涨幅大于7%</th>
+								<td>{{table1[0].rise_sev}}</td>
+							</tr>
+							<tr>
+								<th>当日涨幅大于5%</th>
+								<td>{{table1[0].rise_fiv}}</td>
+							</tr>
+							<tr>
+								<th>当日涨幅大于2%</th>
+								<td>{{table1[0].rise_two}}</td>
+							</tr>
+							<tr>
+								<th>当日跌幅大于7%</th>
+								<td>{{table1[0].fall_sev}}</td>
+							</tr>
+							<tr>
+								<th>当日跌幅大于5%</th>
+								<td>{{table1[0].fall_fiv}}</td>
+							</tr>
+							<tr>
+								<th>当日跌幅大于2%</th>
+								<td>{{table1[0].fall_two}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+        </div>
+        <div class="col-md-7">
+            <div class="panel panel-default">
+				<div class="panel-heading"><strong>变化趋势</strong></div>
+				<meta class="panel-body">
+					<script src="/static/chart.js/dist/Chart.js"></script>
+					<canvas id="myChart" width="400" height="200"></canvas>
+					<script>
+						var ctx = document.getElementById('myChart');
+						var myChart = new Chart(ctx, {
+							type : 'line',
+							data : {
+								labels: [{% for key in chart1_key %}"{{key}}",{% endfor %}],
+								datasets: [
+									{
+										label: '涨停数',
+										data: [{% for value in chart1_value1 %}"{{value}}",{% endfor %}],
+										backgroundColor: 'transparent',
+										borderColor: 'rgba(255, 0, 0, 1)',
+										borderWidth: 2
+									},{
+										label: '跌停数',
+										data: [{% for value in chart1_value2 %}"{{value}}",{% endfor %}],
+										backgroundColor: 'transparent',
+										borderColor: 'rgba(89, 255, 0, 1)',
+										borderWidth: 2
+									},{
+										label: '上涨数',
+										data: [{% for value in chart1_value3 %}"{{value}}",{% endfor %}],
+										backgroundColor: 'transparent',
+										borderColor: 'rgba(255, 164, 164, 0.87)',
+										borderWidth: 2
+									},{
+										label: '下跌数',
+										data: [{% for value in chart1_value4 %}"{{value}}",{% endfor %}],
+										backgroundColor: 'transparent',
+										borderColor: 'rgba(172, 254, 154, 0.87)',
+										borderWidth: 2
+									}
+								]
+							},
+							options : {
+								elemets : {
+									line : {
+										tension : 0
+									}
+								}
+							}
+								}
+						)
+					</script>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
