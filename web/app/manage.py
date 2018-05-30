@@ -32,6 +32,18 @@ def index():
         chart1_value4.append(json.loads(chart1)[i]['fall'])
     return render_template('overview.html', table1=table1, chart1_key=chart1_key, chart1_value1=chart1_value1, chart1_value2 = chart1_value2, chart1_value3 = chart1_value3, chart1_value4 = chart1_value4)
 
+@app.route('/test')
+def test():
+    cal = overview.overview()
+    chart1 = cal.chart1()
+    chart1_key, chart1_value1, chart1_value2 = [], [], []
+    for i in list(range(len(json.loads(chart1)))):
+        chart1_key.append(json.loads(chart1)[i]['stat_date'])
+        chart1_value1.append(json.loads(chart1)[i]['rise_stop'])
+        chart1_value2.append(json.loads(chart1)[i]['fall_stop'])
+    return render_template('chartline.html', chart1_key=chart1_key, chart1_value1=chart1_value1, chart1_value2=chart1_value2)
+
+
 @app.route('/overview')
 def overview_page():
     return index()
