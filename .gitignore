@@ -106,4 +106,4 @@ venv.bak/
 # My configurations
 local*.py
 .idea/
-*.db
+*db*
