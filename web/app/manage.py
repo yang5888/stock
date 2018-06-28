@@ -12,7 +12,7 @@
 
 from flask_bootstrap import Bootstrap
 from flask import Flask, render_template
-from web.app.main import overview
+from web.app.main import overview, rise_stop
 import json
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ bootstrap = Bootstrap(app)
 @app.route('/')
 def index():
     cal = overview.overview()
-    table1 = cal.table1()
+    table1 = json.loads(cal.table1())
     chart1 = cal.chart1()
     chart1_key,chart1_value1,chart1_value2,chart1_value3,chart1_value4 = [], [], [], [], []
     for i in list(range(len(json.loads(chart1)))):
@@ -32,27 +32,24 @@ def index():
         chart1_value4.append(json.loads(chart1)[i]['fall'])
     return render_template('overview.html', table1=table1, chart1_key=chart1_key, chart1_value1=chart1_value1, chart1_value2 = chart1_value2, chart1_value3 = chart1_value3, chart1_value4 = chart1_value4)
 
-@app.route('/test')
-def test():
-    cal = overview.overview()
-    chart1 = cal.chart1()
-    chart1_key, chart1_value1, chart1_value2 = [], [], []
-    for i in list(range(len(json.loads(chart1)))):
-        chart1_key.append(json.loads(chart1)[i]['stat_date'])
-        chart1_value1.append(json.loads(chart1)[i]['rise_stop'])
-        chart1_value2.append(json.loads(chart1)[i]['fall_stop'])
-    return render_template('chartline.html', chart1_key=chart1_key, chart1_value1=chart1_value1, chart1_value2=chart1_value2)
-
-
 @app.route('/overview')
 def overview_page():
     return index()
 
-@app.route('/detail')
-def detail():
-    return render_template('detail.html')
+@app.route('/rise_stop')
+def rise_stop_page():
+    cal = rise_stop.rise_stop()
+    table1 = json.loads(cal.table1())
+    table2 = json.loads(cal.table2())
+    return render_template('rise_stop.html', table1=table1, table2=table2)
+
+@app.route('/test')
+def test():
+    cal = rise_stop.rise_stop()
+    data = cal.table1()
+    return data
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)
 

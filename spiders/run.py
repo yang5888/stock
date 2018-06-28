@@ -15,6 +15,7 @@ sys.path.append(os.path.abspath(os.path.pardir))
 
 from spiders.get_stock_list import GetStockList
 from spiders.get_stock_info import GetStockInfo
+from etl.continuousRiseStop import ContinuousRiseStop
 
 
 

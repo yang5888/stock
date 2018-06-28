@@ -59,5 +59,5 @@ class DML(object):
             else:
                 data = data + "," + record
         data = "[" + data + "]"
-        return data
         conn.close()
+        return data

@@ -88,14 +88,14 @@
             </div>
             <div class="panel panel-default">
 				<div class="panel-heading"><strong>股价分布</strong></div>
-				<meta class="panel-body">
-					<script src="/static/chartline.js"></script>
-					<script>
-                        var labels = [{% for key in chart1_key %}"{{key}}",{% endfor %}]
-                        var data_label = ['涨停数','跌停数','上涨数','下跌数']
-                        var data = [[{% for value in chart1_value1 %}"{{value}}",{% endfor %}],[{% for value in chart1_value2 %}"{{value}}",{% endfor %}],[{% for value in chart1_value3 %}"{{value}}",{% endfor %}],[{% for value in chart1_value4 %}"{{value}}",{% endfor %}]]
-                        lineChart(labels ,data, data_label, 'chart10', '400', '200')
-                    </script>
+{#				<meta class="panel-body">#}
+{#					<script src="/static/chartline.js"></script>#}
+{#					<script>#}
+{#                        var labels = [{% for key in chart1_key %}"{{key}}",{% endfor %}]#}
+{#                        var data_label = ['涨停数','跌停数','上涨数','下跌数']#}
+{#                        var data = [[{% for value in chart1_value1 %}"{{value}}",{% endfor %}],[{% for value in chart1_value2 %}"{{value}}",{% endfor %}],[{% for value in chart1_value3 %}"{{value}}",{% endfor %}],[{% for value in chart1_value4 %}"{{value}}",{% endfor %}]]#}
+{#                        lineChart(labels ,data, data_label, 'chart10', '400', '200')#}
+{#                    </script>#}
             </div>
 		</div>
 	</div>

@@ -1,0 +1,59 @@
+{% extends "list.html" %}
+
+{% block form %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-7">
+			<div class="panel panel-default">
+                <div class="panel-heading"><strong>当日涨停</strong></div>
+                <div class="panel-body">
+					<table class="table table-hover table-bordered">
+                        <thead>
+                        <th>股票代码</th>
+                        <th>股票名称</th>
+                        <th>涨幅</th>
+                        <th>连板天数</th>
+                        <th>震幅</th>
+                        <th>总市值</th>
+                        <th>流通市值</th>
+                        </thead>
+						<tbody>
+                            {% for column in table1 %}
+                            <tr>
+                                <td>{{ column.symbol }}</td>
+                                <td>{{ column.name }}</td>
+                                <td>{{ column.percentage }}%</td>
+                                <td>{{ column.risestopnum }}</td>
+                                <td>{{ column.amplitude }}%</td>
+                                <td>{{ column.marketCapital }}亿</td>
+                                <td>{{ column.float_market_capital }}亿</td>
+                            </tr>
+                            {% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+        </div>
+        <div class="col-md-5">
+			<div class="panel panel-default">
+				<div class="panel-heading"><strong>连板分布</strong></div>
+				<div class="panel-body">
+                <table class="table table-hover table-bordered">
+                        <thead>
+                        <th>连板天数</th>
+                        <th>个数</th>
+                        </thead>
+						<tbody>
+                            {% for column in table2 %}
+                            <tr>
+                                <td>{{ column.risestopnum }}</td>
+                                <td>{{ column.cnt }}</td>
+                            </tr>
+                            {% endfor %}
+						</tbody>
+					</table>
+            </div>
+		</div>
+	</div>
+</div>
+{% endblock %}

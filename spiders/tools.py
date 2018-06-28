@@ -15,5 +15,8 @@ class tools(object):
         pass
 
     def strcat(self, str_init, str_add):
-        __str = str_init + "," + "\"" + str_add + "\""
+        if str_init == '':
+            __str = "\"" + str_add + "\""
+        else:
+            __str = str_init + "," + "\"" + str_add + "\""
         return __str
