@@ -75,11 +75,11 @@ class quant(object):
                                              day[
                                                  'stat_date'] + '\' and symbol=\'' + self.__symbol + '\' order by stat_date desc limit 10)a'))[
                 0]['ma10']
-            ma30 = json.loads(sel.SelectData(self.__db,
-                                             'select avg(close) ma30 from (select close from stock_history where stat_date<\'' +
+            ma5 = json.loads(sel.SelectData(self.__db,
+                                             'select avg(close) ma5 from (select close from stock_history where stat_date<\'' +
                                              day[
-                                                 'stat_date'] + '\' and symbol=\'' + self.__symbol + '\' order by stat_date desc limit 30)a'))[
-                0]['ma30']
+                                                 'stat_date'] + '\' and symbol=\'' + self.__symbol + '\' order by stat_date desc limit 5)a'))[
+                0]['ma5']
             day_max = json.loads(sel.SelectData(self.__db, 'select high from stock_history where stat_date=\'' + day[
                 'stat_date'] + '\' and symbol=\'' + self.__symbol + '\''))[0]['high']
             day_min = json.loads(sel.SelectData(self.__db, 'select low from stock_history where stat_date=\'' + day[
@@ -92,7 +92,7 @@ class quant(object):
                 'stat_date'] + '\' and symbol=\'' + self.__symbol + '\''))[0]['ratio']
             last_close_price = int(float(day_close) / (1 + float(day_ratio) / 100) * 100) / 100
 
-            if ma10 > ma30:
+            if ma5 > ma10:
                 if self.__grid_flag == 0:
                     (deal_grid, price_grid, grid_width) = self.init_grid(day['stat_date'], self.__symbol,
                                                                          self.__freeamount[len(self.__freeamount) - 1],
@@ -108,8 +108,8 @@ class quant(object):
                             day_first_deal = 0.0
                             stock = 0
                             for j in range(len(price_grid) - i):
-                                day_first_deal = day_first_deal + price_grid[j] * deal_grid[j]
-                                stock = stock + deal_grid[j]
+                                day_first_deal = day_first_deal + price_grid[i] * deal_grid[i + j]
+                                stock = stock + deal_grid[i + j]
                             self.__holdstock.append(stock)
                             self.__holdamount.append(stock * float(day_close))
                             self.__dealfee.append(
@@ -170,15 +170,9 @@ class quant(object):
                 fee = self.dealfee('sell', 0.0005, self.__holdstock[len(self.__holdstock) - 1] * float(day_open))
                 self.__dealfee.append(self.__dealfee[len(self.__dealfee) - 1] + fee)
                 self.__grid_flag = 0
-            print(self.__freeamount[len(self.__freeamount) - 1])
-            print(self.__holdamount[len(self.__holdamount) - 1])
-            print(self.__dealfee[len(self.__dealfee) - 1])
-            print(price_grid)
-            print(day_close)
-            print(day_open)
             self.__yield_rate.append(str(int((((self.__freeamount[len(self.__freeamount) - 1] + self.__holdamount[
-            len(self.__holdamount) - 1] - self.__dealfee[len(
-            self.__dealfee) - 1]) / self.__inital_fund - 1) * 100) * 100) / 100) + "%")
+                len(self.__holdamount) - 1] - self.__dealfee[len(
+                self.__dealfee) - 1]) / self.__inital_fund - 1) * 100) * 100) / 100) + "%")
         print("股票代码:" + symbol)
         print("回测区间:" + self.__start_date + "~" + self.__end_date)
         # print("网格宽度（%）:" + str(grid_width) + "%")
@@ -190,11 +184,11 @@ class quant(object):
         #     self.__dealfee) - 1]) / self.__inital_fund - 1) * 100) * 100) / 100) + "%")
         print("策略收益率（%）:" + str(self.__yield_rate))
         print(str(self.__holdstock))
+        print(str(self.__freeamount))
 
 
 if __name__ == "__main__":
     q = quant()
-    q.backfill('2015-06-16', '2015-06-17', 'SZ002382', 200000.0)
-    # q.backfill('2015-06-16', '2018-01-01', 'SZ002382', 200000.0)
-    # q.backfill('2018-01-01', '2018-06-29', 'SH600621', 200000.0)
+    # q.backfill('2015-01-01', '2015-06-15', 'SZ002380', 200000.0)
+    q.backfill('2018-01-01', '2018-06-29', 'SH600621', 200000.0)
     # q.init_grid('2015-01-01','SH600621',200000, 12.61)
